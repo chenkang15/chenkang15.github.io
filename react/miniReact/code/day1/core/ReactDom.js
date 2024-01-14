@@ -1,4 +1,5 @@
-import React from './React.js';
+// import React from './React.js';
+import React from '../../day2/index.js'
 // ReactDom.createRoot(document.getElementById('root')).render(<App/>)
 const ReactDom = {
     createRoot: (container) => {
