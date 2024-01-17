@@ -1,21 +1,21 @@
 # 实现mini-react
 
-## day 2 - 统一提交:
+## day 3
 
-> 目标： 统一提交
-> 统一提交是为了解决用户因为浏览器没有空闲导致页面渲染不全的问题
-> 解决思路就是在最后时刻再把dom添加到页面上
+> 目标： props更新
+> 生成两个dom树，一个是初始化时期，一个是更新时期，初始化的vnode节点有个指针指向更新时期的vnode
+> props变更是比对属性
 
 
 ### 分析
 
-> 渲染时机就是最后一刻，也就是拿到最后一个节点后
 
 
 ### 实现
 
 ```javascript
 function createTextNode(text) {
+  console.log("heiheihei!!!!!!!");
   return {
     type: "TEXT_ELEMENT",
     props: {
@@ -49,6 +49,7 @@ function render(el, container) {
 }
 
 let root = null;
+let currentRoot = null;
 let nextWorkOfUnit = null;
 // workLoop 是贯穿整个渲染过程
 // 虚拟dom生成结束，nextWorkOfUnit 为空
@@ -70,13 +71,19 @@ function workLoop(deadline) {
 
 function commitRoot() {
   commitWork(root.child)
+  currentRoot = root;
   root = null
 }
 
 // 从根节点开始 依次（中序遍历？）把虚拟dom添加到页面上
 function commitWork(fiber) {
   if (!fiber) return;
-  fiber.parent.dom.append(fiber.dom);
+
+  if (fiber.effectTag === 'update') {
+    updateProps(fiber.dom, fiber.props, fiber.alternate?.props)
+  } else if (fiber.effectTag === 'placement') {
+    fiber.parent.dom.append(fiber.dom);
+  }
   commitWork(fiber.child);
   commitWork(fiber.sibling);
 }
@@ -87,27 +94,61 @@ function createDom(type) {
     : document.createElement(type);
 }
 
-function updateProps(dom, props) {
-  Object.keys(props).forEach((key) => {
+function updateProps(dom, nextProps, prevProps) {
+
+  Object.keys(prevProps).forEach(key => {
     if (key !== "children") {
+      if (!(key in nextProps)) {
+        dom.removeAttribute(key)
+      }
       dom[key] = props[key];
+    }
+  })
+
+
+  
+  Object.keys(nextProps).forEach((key) => {
+    if (key !== "children") {
+      if (nextProps[key] !== prevProps[key]) {
+        dom[key] = nextProps[key];
+      }
     }
   });
 }
 
 function initChildren(fiber) {
+  let oldFiber = fiber.alternate?.child;
   const children = fiber.props.children;
   let prevChild = null;
   children.forEach((child, index) => {
-    const newFiber = {
-      type: child.type,
-      props: child.props,
-      child: null,
-      parent: fiber,
-      sibling: null,
-      dom: null,
-    };
+    const isSameType = oldFiber && oldFiber.type === child.type;
+    let newFiber;
+    if (isSameType) {
+      newFiber = {
+        type: child.type,
+        props: child.props,
+        child: null,
+        parent: fiber,
+        sibling: null,
+        dom: oldFiber.dom,
+        effectTag: 'update',
+        alternate: oldFiber,
+      };
+    } else {
+      newFiber = {
+        type: child.type,
+        props: child.props,
+        child: null,
+        parent: fiber,
+        sibling: null,
+        dom: null,
+        effectTag: 'placement',
+      };
+    }
 
+    if (oldFiber) {
+      oldFiber = oldFiber.sibling;
+    }
     if (index === 0) {
       fiber.child = newFiber;
     } else {
@@ -123,7 +164,7 @@ function performWorkOfUnit(fiber) {
 
     // fiber.parent.dom.append(dom);
 
-    updateProps(dom, fiber.props);
+    updateProps(dom, fiber.props, {});
   }
 
   initChildren(fiber);
@@ -142,7 +183,20 @@ function performWorkOfUnit(fiber) {
 
 requestIdleCallback(workLoop);
 
+
+
+
+function update() {
+  nextWorkOfUnit = {
+    dom: currentRoot.dom,
+    props: currentRoot.props,
+  };
+
+  root = nextWorkOfUnit;
+}
+
 const React = {
+  update,
   render,
   createElement,
 };
@@ -152,12 +206,4 @@ export default React;
 ```
 
 
-## 函数是组件
-
-
-统一提交
-统一提交是为了解决用户因为浏览器没有空闲导致页面渲染不全的问题
-解决思路就是在最后时刻再把dom添加到页面上
-函数组件 
-处理虚拟dom中的children时对函数进行开包操作
 
