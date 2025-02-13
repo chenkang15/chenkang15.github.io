@@ -3,8 +3,8 @@ const fs = require('fs');
 const fileStream = fs.createReadStream('./example.txt');
 // 创建 readline 接口
 const rl = require('readline').createInterface({
-  input: fileStream,
-  crlfDelay: Infinity // 识别所有换行符
+    input: fileStream,
+    crlfDelay: Infinity // 识别所有换行符
 });
 // --------------------------------------------------------
 // const rl = require('readline').createInterface({
@@ -17,6 +17,9 @@ const readline = async () => (await iter.next()).value;
 // ========================================================
 // ========================================================
 
+/*
+
+*/
 (async () => {
     rl.close();
 })();

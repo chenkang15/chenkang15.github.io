@@ -18,7 +18,7 @@ const readline = async () => (await iter.next()).value;
         pre[cur] = calc(cur)
         return pre;
     }, {})
-    console.log("🚀 ~ inputSizeMap ~ inputSizeMap:", inputSizeMap)
+    // console.log("🚀 ~ inputSizeMap ~ inputSizeMap:", inputSizeMap)
 
     inputs.sort((a, b) => inputSizeMap[a] - inputSizeMap[b]);
     for (let v of inputs) {

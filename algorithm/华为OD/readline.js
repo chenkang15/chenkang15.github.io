@@ -31,3 +31,31 @@ console.log('start ....');
         i++
     }
 })()
+
+
+
+
+
+compareFunction 的规则：
+接受两个参数 a 和 b，表示当前比较的两个元素。
+
+返回值：
+
+如果返回值 小于 0，则 a 排在 b 前面。
+
+如果返回值 等于 0，则 a 和 b 的相对位置不变。
+
+如果返回值 大于 0，则 b 排在 a 前面。
+
+示例：数字升序排序
+javascript
+复制
+const numbers = [10, 5, 20, 1];
+numbers.sort((a, b) => a - b);
+console.log(numbers); // 输出: [1, 5, 10, 20]
+示例：数字降序排序
+javascript
+复制
+const numbers = [10, 5, 20, 1];
+numbers.sort((a, b) => b - a);
+console.log(numbers); // 输出: [20, 10, 5, 1]
