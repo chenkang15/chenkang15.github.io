@@ -4,44 +4,44 @@
 
 ## 学习计划
 
-- [] HTML
+- [ ] HTML
 
-- [] JS
+- [ ] JS
 
-- [] CSS
-- [] 包管理工具
-  - [] npm
-  - [] yarn
-  - [] pnpm
+- [ ] CSS
+- [ ] 包管理工具
+  - [ ] npm
+  - [ ] yarn
+  - [ ] pnpm
 
-- [] 前端框架
-  - [] reat
-  - [] vue2 ※※※
-    - [] 使用
-    - [] 优化
-    - [] 原理
-  - [] vue3
+- [ ] 前端框架
+  - [ ] reat
+  - [ ] vue2 ※※※
+    - [ ] 使用
+    - [ ] 优化
+    - [ ] 原理
+  - [ ] vue3
 
-- [] 打包工具
-  - [] webpack
-  - [] vite
-  - [] rollup
-  - [] swc
+- [ ] 打包工具
+  - [ ] webpack
+  - [ ] vite
+  - [ ] rollup
+  - [ ] swc
 
-- [] 前端测试工具
-  - [] jest
+- [ ] 前端测试工具
+  - [ ] jest
   
-- [] 服务端渲染
-  - [] next(react)
-  - [] nuxt(vue)
+- [ ] 服务端渲染
+  - [ ] next(react)
+  - [ ] nuxt(vue)
 
-- [] 移动应用
-  - [] react native
-  - [] flutter
+- [ ] 移动应用
+  - [ ] react native
+  - [ ] flutter
 
-- [] PC客户端
-  - [] electron
-  - [] tauri
+- [ ] PC客户端
+  - [ ] electron
+  - [ ] tauri
 
 
 - [x] 前端模块化
