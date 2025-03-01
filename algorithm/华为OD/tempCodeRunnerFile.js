@@ -1,1 +1,1 @@
-' '.split
+console.log([][-1])
